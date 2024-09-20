@@ -82,8 +82,8 @@ static void Loop()
 
                 width             = Sanitized($"w{stage}", width);
                 height            = Sanitized($"h{stage}", height);
-                TreasureHeight    = Sanitized($"h{stage}", TreasureHeight);
                 TreasureWidth     = Sanitized($"w{stage}", TreasureWidth);
+                TreasureHeight    = Sanitized($"h{stage}", TreasureHeight);
         });
         switch (stage)
         {
@@ -119,9 +119,33 @@ static void Loop()
             TreasureWidth = new Random().Next((int)(20 * (stage +1)));
         }
     };
+    Action RunAway = () =>
+    {
+        if ((counter % 3) == 0)
+        {
+            TreasureWidth++;
+        }
+        if ((counter % 3) == 1)
+        {
+            TreasureHeight++;
+        }
+        if (width + 1 == TreasureWidth && width == TreasureWidth)
+        {
+            if ((counter % 3) == 1)
+            {
+                TreasureWidth--;
+            }
+        }
+        if(height >= TreasureHeight && (counter %3) ==1)
+        {
+            TreasureHeight--;
+        }
+
+    };
     string Rooms = string.Empty;
     while (quit)
     {
+        counter++;
         var readKey = Console.ReadKey();
         if (readKey.KeyChar == 'x')
         {
@@ -147,23 +171,17 @@ static void Loop()
         {
             quit = false;
         }
-        counter++;
-        if((counter%3) == 0)
-        {
-            TreasureWidth++;
-        }
-        if((counter%3) == 1)
-        {
-            TreasureHeight++;
-        }
-        Sanitizer.Invoke();
-        Logic.Invoke();
+        RunAway();
+        Sanitizer();
+        Logic();
+        Thread.Sleep(250);
         Console.Clear();
-        Thread.Sleep(100);
         Console.BackgroundColor = ConsoleColor.Black;
         Rooms = CreateSeveralRooms(stage);
         Rooms = InsertPlayer(new Tuple<int, int>(TreasureWidth, TreasureHeight),Rooms, "X");
         Rooms = InsertPlayer(new Tuple<int, int>(width, height), Rooms, "O");
+        Console.WriteLine();
+        Console.WriteLine();
         Console.Write(Rooms);
         Console.WriteLine(stage);
         Console.WriteLine();
