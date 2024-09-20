@@ -1,10 +1,8 @@
 ﻿Console.WriteLine("***********************************************");
-Console.WriteLine("You are O, Catch X!");
-Console.WriteLine("use A, W, S, D for movement");
-Console.WriteLine("For now if you don't catch it before");
-Console.WriteLine("it reaches an edge, the program will crash.");
-Console.WriteLine("Press ANY key to start.");
-Console.WriteLine("            GoodLuck!");
+Console.WriteLine("          You are O, Catch X!");
+Console.WriteLine(" use A, W, S, D for movement, press q to quit");
+Console.WriteLine("           Press ANY key to start.");
+Console.WriteLine("                GoodLuck!");
 Console.WriteLine("************************************************");
 Loop();
 
@@ -82,10 +80,10 @@ static void Loop()
     {
         Action<int> Selection = new Action<int>((stage) => {
 
-                width = Sanitized($"w{stage}", width);
-                height = Sanitized($"h{stage}", height);
-                TreasureHeight = Sanitized($"w{stage}", TreasureHeight);
-                TreasureWidth = Sanitized($"h{stage}", TreasureWidth);
+                width             = Sanitized($"w{stage}", width);
+                height            = Sanitized($"h{stage}", height);
+                TreasureHeight    = Sanitized($"h{stage}", TreasureHeight);
+                TreasureWidth     = Sanitized($"w{stage}", TreasureWidth);
         });
         switch (stage)
         {
@@ -150,7 +148,7 @@ static void Loop()
             quit = false;
         }
         counter++;
-        if((counter%3) ==0)
+        if((counter%3) == 0)
         {
             TreasureWidth++;
         }
