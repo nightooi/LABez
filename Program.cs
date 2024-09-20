@@ -1,25 +1,19 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
+﻿
 
 Loop();
 
 
 static string InsertPlayer(Tuple<int, int> Coordinates, in string Field, string player) 
 {
-
     try
     {
-
-    var split =  Field.Split("\r\n");
-    var height = split[Coordinates.Item2];
-    var result = height.Insert(Coordinates.Item1, player);
-    result = result.Remove(Coordinates.Item1 + 1, 1);
-    split[Coordinates.Item2] = result;
-
-    result = string.Empty;
+        var split =  Field.Split("\r\n");
+        var height = split[Coordinates.Item2];
+        var result = height.Insert(Coordinates.Item1, player);
+        result = result.Remove(Coordinates.Item1 + 1, 1);
+        split[Coordinates.Item2] = result;
+    
+        result = string.Empty;
     foreach(var i in split)
     {
         result += i + "\r\n";
@@ -32,10 +26,9 @@ static string InsertPlayer(Tuple<int, int> Coordinates, in string Field, string 
     }
     return Field;
 }
-
 static int Sanitized(string widthOrHeight, int current)
 {
- var Transformer =  new Func<int, int, int>((max, current) => {
+    var Transformer =  new Func<int, int, int>((max, current) => {
         if (current <= 0) return 0;
         if (current >= max) return max;
         return current;
@@ -71,6 +64,7 @@ static int Sanitized(string widthOrHeight, int current)
 }
 static void Loop()
 {
+    int counter = 0;
     int width = 5;
     bool quit = true;
     int stage = 0;
@@ -84,6 +78,8 @@ static void Loop()
 
                 width = Sanitized($"w{stage}", width);
                 height = Sanitized($"h{stage}", height);
+                TreasureHeight = Sanitized($"w{stage}", TreasureHeight);
+                TreasureWidth = Sanitized($"h{stage}", TreasureWidth);
         });
         switch (stage)
         {
@@ -102,7 +98,6 @@ static void Loop()
         }
 
     };
-
     Action Logic = () =>
     {
 
@@ -147,6 +142,15 @@ static void Loop()
         if(readKey.KeyChar == 'q')
         {
             quit = false;
+        }
+        counter++;
+        if((counter%3) ==0)
+        {
+            TreasureWidth++;
+        }
+        if((counter%3) == 1)
+        {
+            TreasureHeight++;
         }
         Sanitizer.Invoke();
         Logic.Invoke();
