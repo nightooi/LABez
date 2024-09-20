@@ -1,5 +1,11 @@
-﻿
-
+﻿Console.WriteLine("***********************************************");
+Console.WriteLine("You are O, Catch X!");
+Console.WriteLine("use A, W, S, D for movement");
+Console.WriteLine("For now if you don't catch it before");
+Console.WriteLine("it reaches an edge, the program will crash.");
+Console.WriteLine("Press ANY key to start.");
+Console.WriteLine("            GoodLuck!");
+Console.WriteLine("************************************************");
 Loop();
 
 
